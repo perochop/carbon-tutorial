@@ -69,7 +69,6 @@ class LandingPage extends Component {
 
     return (
       <div>
-        <div>landing page</div>
         <Loading active={this.state.loading} />
         <DataTable
           rows={this.props.student}
@@ -111,8 +110,7 @@ class LandingPage extends Component {
               </Table>
               <TableToolbar>
                 <Button onClick={() => this.batchActionClick(selectedRows)}>
-                  {' '}
-                  Remove{' '}
+                  Remove
                 </Button>
               </TableToolbar>
             </TableContainer>
