@@ -7,6 +7,7 @@ import { Button } from 'carbon-components-react';
 import { Form } from 'carbon-components-react';
 import { Tag } from 'carbon-components-react';
 import * as action from '../../redux/action';
+import LaborWeek from './LaborWeek';
 
 // this allows the component to have the access to the redux store -> this.props.student
 function mapStateToProps(state) {
@@ -67,8 +68,9 @@ class StudentForm extends Component {
   updateFormData(objThis, data) {
     console.log('updateFormData');
     let newRecord = objThis.state.record;
-    newRecord._rev = data.rev;
+    newRecord._rev = data.rev; // update revision value
     objThis.setState({
+      // set the state.record to the "new record"
       record: newRecord,
       statusUpdated: 'Record Successfully Updated',
     });
@@ -79,7 +81,7 @@ class StudentForm extends Component {
     console.log(this.state.record);
     //console.log(this.props.match.params.id)
     action
-      .updateStudent(this.state.record)
+      .updateStudent(this.state.record) // call this to update this.state.record
       .then(this.updateFormData.bind(null, this)); // pass "this", so we can acccess setState
   }
 
@@ -111,7 +113,7 @@ class StudentForm extends Component {
           onChange={this.handleChangeDoB.bind(this)}>
           <DatePickerInput id="dob" labelText="dob" />
         </DatePicker>
-
+        <LaborWeek LaborWeek={this.state.record.dob} />
         <Button className="bx--btn bx--btn--primary" type="submit">
           Submit
         </Button>

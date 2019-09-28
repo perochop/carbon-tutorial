@@ -36,15 +36,19 @@ export function getAllStudent() {
       selector: {
         _id: { $gt: 0 }, // retrieve's all data
       },
-      fields: ['_id', '_rev', 'name', 'dob'], // retrieves the "columns"
+      fields: ['_id', '_rev', 'name', 'dob', 'id'], // retrieves the "columns"
     };
     // forced to use "post -> data search", bec getAlldocs will only return "all ids"
     return instance
       .post('/_find', JSON.stringify(data))
       .then(function(response) {
         let student = [];
-        student = [...response.data.docs];
-        console.log(student);
+        //student = [...response.data.docs];
+        //force to loop so we can plug id = _id
+        response.data.docs.forEach(element => {
+          element.id = element._id;
+          student.push(element);
+        });
         // once we have all the data in the array "student", call the action "loadStudentList"
         dispatch(loadStudentList(student));
       })
@@ -55,10 +59,18 @@ export function getAllStudent() {
   };
 }
 
-export function loadStudentList(post) {
+export function loadStudentList(student) {
   // calling an action will automatically call "reducer"
   return {
     type: 'GET_ALL_STUDENT',
-    post: post,
+    studentArray: student,
+  };
+}
+
+export function removeStudent(studentIdArray) {
+  // calling an action will automatically call "reducer"
+  return {
+    type: 'REMOVE_STUDENT',
+    index: studentIdArray,
   };
 }
