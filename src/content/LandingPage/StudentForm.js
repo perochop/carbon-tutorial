@@ -103,8 +103,9 @@ class StudentForm extends Component {
           type="text"
           name="name"
           labelText="Name"
+          value={this.state.record.name}
           onChange={this.handleChangeName.bind(this)}
-          placeholder={this.state.record.name}
+          defaultValue={'Name here'}
         />
         <DatePicker
           datePickerType="single"
